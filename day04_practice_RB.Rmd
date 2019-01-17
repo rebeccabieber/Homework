@@ -74,6 +74,7 @@ levels(my.iris$Species)
 my.iris$Species_new = my.iris$Species
 levels(my.iris$Species_new) = c("set", "vers", "virg")
 
+xtabs(~Species, Species_new, data = my.iris)
 
 summary(my.iris)
 
@@ -88,14 +89,28 @@ summary(my.iris)
 
 levels(my.iris$Species)
 
-my.iris$specis_relevel = relevel(my.iris$Species, "setosa")
+my.iris$specis_relevel = relevel(my.iris$Species, "setosa") #just sets the reference level
 summary(my.iris)
 
 
-my.iris$specis_reorder = reorder(my.iris$Species, "versicolor") #still don't get this.
+
+my.iris$SpeciesNewNum = ifelse(my.iris$Species %in% "setosa", 3, 
+                               ifelse(my.iris$Species %in% "versicolor", 1, 
+                                       ifelse(my.iris$Species %in% "virginica", 2, NA)))
+
+
+my.iris$specis_reorder = reorder(my.iris$Species, my.iris$SpeciesNewNum) #reordering Species (but not saving                                                             that change, based on the numberes in that column)
+
+
+
+
 
 my.iris$specis_factor = factor(my.iris$Species, c("versicolor, setosa", "virginica"))
 summary(my.iris)
+
+
+
+
 ```
 
 7. Explore coersion! Try to make a series of vectors with combinations from each of these data types:
